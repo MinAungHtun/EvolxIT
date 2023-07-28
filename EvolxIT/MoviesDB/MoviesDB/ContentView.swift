@@ -10,6 +10,7 @@ import SwiftUI
 struct ContentView: View {
     @State var Movies:[Movie] = []
     @State var dataLoadSuccess:Bool = false
+    let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
     @State var upcomingMovies:[Movie] = []
     var body: some View {
         NavigationView{
@@ -105,7 +106,11 @@ struct ContentView: View {
                 requestMovie()
                 requestUpcomingMovie()
             })
-        }
+            .onReceive(timer) { _ in
+                requestMovie()
+                requestUpcomingMovie()
+                        }
+        }.padding()
     }
 
     func requestUpcomingMovie(){
@@ -124,6 +129,7 @@ struct ContentView: View {
         let session = URLSession.shared
         let dataTask = session.dataTask(with: request as URLRequest, completionHandler: { (data, response, error) -> Void in
           if (error != nil) {
+              self.upcomingMovies.append(Movie(adult: false, backdrop_path: " ", genre_ids: [0,1], id: 1, original_language: "en", original_title: "placeholder", overview: "placeholder", popularity: 4.1, poster_path: " ", release_date: "1/1/2023", title: "placeholder", video: false, vote_average: 4.1, vote_count: 30))
             print(error as Any)
           } else {
             let httpResponse = response as? HTTPURLResponse
@@ -135,6 +141,7 @@ struct ContentView: View {
                           }
                       } catch let decoderError {
                           print(decoderError)
+                          self.upcomingMovies.append(Movie(adult: false, backdrop_path: " ", genre_ids: [0,1], id: 1, original_language: "en", original_title: "placeholder", overview: "placeholder", popularity: 4.1, poster_path: " ", release_date: "1/1/2023", title: "placeholder", video: false, vote_average: 4.1, vote_count: 30))
                           return
                       }
                     }
@@ -160,6 +167,7 @@ struct ContentView: View {
         let session = URLSession.shared
         let dataTask = session.dataTask(with: request as URLRequest, completionHandler: { (data, response, error) -> Void in
           if (error != nil) {
+              self.upcomingMovies.append(Movie(adult: false, backdrop_path: " ", genre_ids: [0,1], id: 1, original_language: "en", original_title: "placeholder", overview: "placeholder", popularity: 4.1, poster_path: " ", release_date: "1/1/2023", title: "placeholder", video: false, vote_average: 4.1, vote_count: 30))
             print(error as Any)
           } else {
             let httpResponse = response as? HTTPURLResponse
@@ -171,6 +179,7 @@ struct ContentView: View {
                           }
                       } catch let decoderError {
                           print(decoderError)
+                          self.upcomingMovies.append(Movie(adult: false, backdrop_path: " ", genre_ids: [0,1], id: 1, original_language: "en", original_title: "placeholder", overview: "placeholder", popularity: 4.1, poster_path: " ", release_date: "1/1/2023", title: "placeholder", video: false, vote_average: 4.1, vote_count: 30))
                           print("Internet")
                           return
                       }
