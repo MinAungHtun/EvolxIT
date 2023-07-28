@@ -136,7 +136,7 @@ struct ContentView: View {
                     if let data = data {
                       do {
                         let responses = try JSONDecoder().decode(JSONResponse.self, from: data)
-                          for result in responses.results {
+                          for result in responses.results { //TODO store these in userdefaults or coredata to show it when offline
                               self.upcomingMovies.append(Movie(adult: result.adult, backdrop_path: result.backdrop_path, genre_ids: result.genre_ids, id: result.id, original_language: result.original_language, original_title: result.original_title, overview: result.overview, popularity: result.popularity, poster_path: result.poster_path, release_date: result.release_date, title: result.title, video: result.video, vote_average: result.vote_average, vote_count: result.vote_count))
                           }
                       } catch let decoderError {
@@ -174,7 +174,7 @@ struct ContentView: View {
                     if let data = data {
                       do {
                         let responses = try JSONDecoder().decode(JSONResponse.self, from: data)
-                          for result in responses.results {
+                          for result in responses.results { //TODO store these in userdefaults or coredata to show it when offline
                               self.Movies.append(Movie(adult: result.adult, backdrop_path: result.backdrop_path, genre_ids: result.genre_ids, id: result.id, original_language: result.original_language, original_title: result.original_title, overview: result.overview, popularity: result.popularity, poster_path: result.poster_path, release_date: result.release_date, title: result.title, video: result.video, vote_average: result.vote_average, vote_count: result.vote_count))
                           }
                       } catch let decoderError {
