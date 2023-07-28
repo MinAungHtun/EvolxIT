@@ -35,43 +35,41 @@ struct ContentView: View {
                         .cornerRadius(20)
                         .padding()
                 }
-//                if(dataLoadSuccess){
-//                GeometryReader { geometry in
-//                    CarouselView(numberOfImages: 3) {
-//                        ZStack{
-//
-//                            NavigationLink(destination: MoviesDetails(movie: self.upcomingMovies[0])){
-//                                //Text("Something")
-//                                //                                Image("Meditation 10 mins")
-//                                //                                    .resizable()
-//                                //                                    .scaledToFill()
-//                                //                                    .frame(width: geometry.size.width, height: geometry.size.height)
-//                                //                                .clipped()}
-//                                Text("Meditation").font(Font.custom("Nexa Bold", size: 19)).fontWeight(.bold).padding(.top, 185).padding(.trailing, 130)
-//                            }
-//
-//                        }
-//                        ZStack{
-//                            NavigationLink(destination: MoviesDetails(movie: self.upcomingMovies[1])){
-//                                Text("Thought Hunter").font(Font.custom("Nexa Bold", size: 19)).fontWeight(.bold).padding(.top, 195).padding(.trailing, 130)
-//                            }
-//                        }
-//                        ZStack{
-//                            NavigationLink(destination: MoviesDetails(movie: self.upcomingMovies[2])){
-//                                //                        Image("Seeking balance")
-//                                //                            .resizable()
-//                                //                            .scaledToFill()
-//                                //                            .frame(width: geometry.size.width, height: geometry.size.height)
-//                                //                            .clipped()}
-//                                Text("Seeking Balance").font(Font.custom("Nexa Bold", size: 19)).fontWeight(.bold).padding(.top, 195).padding(.trailing, 130)
-//
-//                            }
-//                        }
-//                    }
-//
-//
-//                }.frame(height: 240, alignment: .center)
-            //}
+                if(dataLoadSuccess){
+                GeometryReader { geometry in
+                    CarouselView(numberOfImages: 3) {
+                        ZStack{
+                            NavigationLink(destination: PlayerView()){
+                                //Text("Something")
+                                Image("Lyn-around")
+                            .resizable()
+                            .scaledToFill()
+                            .frame(width: geometry.size.width, height: geometry.size.height)
+                                    .clipped()}
+
+                        }
+                        ZStack{
+                            NavigationLink(destination: PlayerView()){
+                        Image("Lyn-around")
+                            .resizable()
+                            .scaledToFill()
+                            .frame(width: geometry.size.width, height: geometry.size.height)
+                            .clipped()}
+                        }
+                        ZStack{
+                            NavigationLink(destination: PlayerView()){
+                        Image("Lyn-around")
+                            .resizable()
+                            .scaledToFill()
+                            .frame(width: geometry.size.width, height: geometry.size.height)
+                            .clipped()}
+                        }
+                    }
+                    
+                    
+                }.frame(height: 240, alignment: .center)
+                
+            }
                 ScrollView(.vertical, showsIndicators: false) {
                     ScrollView(.horizontal, showsIndicators: false) {
                         HStack(alignment: .top, spacing: 0){
@@ -130,18 +128,21 @@ struct ContentView: View {
         let dataTask = session.dataTask(with: request as URLRequest, completionHandler: { (data, response, error) -> Void in
           if (error != nil) {
               self.upcomingMovies.append(Movie(adult: false, backdrop_path: " ", genre_ids: [0,1], id: 1, original_language: "en", original_title: "placeholder", overview: "placeholder", popularity: 4.1, poster_path: " ", release_date: "1/1/2023", title: "placeholder", video: false, vote_average: 4.1, vote_count: 30))
+              self.dataLoadSuccess = true
             print(error as Any)
           } else {
             let httpResponse = response as? HTTPURLResponse
                     if let data = data {
                       do {
                         let responses = try JSONDecoder().decode(JSONResponse.self, from: data)
-                          for result in responses.results { //TODO store these in userdefaults or coredata to show it when offline
+                          for result in responses.results {
                               self.upcomingMovies.append(Movie(adult: result.adult, backdrop_path: result.backdrop_path, genre_ids: result.genre_ids, id: result.id, original_language: result.original_language, original_title: result.original_title, overview: result.overview, popularity: result.popularity, poster_path: result.poster_path, release_date: result.release_date, title: result.title, video: result.video, vote_average: result.vote_average, vote_count: result.vote_count))
+                              self.dataLoadSuccess = true
                           }
                       } catch let decoderError {
                           print(decoderError)
                           self.upcomingMovies.append(Movie(adult: false, backdrop_path: " ", genre_ids: [0,1], id: 1, original_language: "en", original_title: "placeholder", overview: "placeholder", popularity: 4.1, poster_path: " ", release_date: "1/1/2023", title: "placeholder", video: false, vote_average: 4.1, vote_count: 30))
+                          self.dataLoadSuccess = true
                           return
                       }
                     }
@@ -168,18 +169,21 @@ struct ContentView: View {
         let dataTask = session.dataTask(with: request as URLRequest, completionHandler: { (data, response, error) -> Void in
           if (error != nil) {
               self.upcomingMovies.append(Movie(adult: false, backdrop_path: " ", genre_ids: [0,1], id: 1, original_language: "en", original_title: "placeholder", overview: "placeholder", popularity: 4.1, poster_path: " ", release_date: "1/1/2023", title: "placeholder", video: false, vote_average: 4.1, vote_count: 30))
+              self.dataLoadSuccess = true
             print(error as Any)
           } else {
             let httpResponse = response as? HTTPURLResponse
                     if let data = data {
                       do {
                         let responses = try JSONDecoder().decode(JSONResponse.self, from: data)
-                          for result in responses.results { //TODO store these in userdefaults or coredata to show it when offline
+                          for result in responses.results {
                               self.Movies.append(Movie(adult: result.adult, backdrop_path: result.backdrop_path, genre_ids: result.genre_ids, id: result.id, original_language: result.original_language, original_title: result.original_title, overview: result.overview, popularity: result.popularity, poster_path: result.poster_path, release_date: result.release_date, title: result.title, video: result.video, vote_average: result.vote_average, vote_count: result.vote_count))
+                              self.dataLoadSuccess = true
                           }
                       } catch let decoderError {
                           print(decoderError)
                           self.upcomingMovies.append(Movie(adult: false, backdrop_path: " ", genre_ids: [0,1], id: 1, original_language: "en", original_title: "placeholder", overview: "placeholder", popularity: 4.1, poster_path: " ", release_date: "1/1/2023", title: "placeholder", video: false, vote_average: 4.1, vote_count: 30))
+                          self.dataLoadSuccess = true
                           print("Internet")
                           return
                       }
